@@ -1,3 +1,5 @@
+import oscP5.*;
+
 class MotionDataManager{
     int NUM_BONE = 25;                    //骨格の頂点数
     PVector[] outcoming_bone_data;            //骨格データを格納する配列
@@ -5,7 +7,7 @@ class MotionDataManager{
     
     CsvManager csvManager;                 //保存済みデータを使用する際のクラス
     
-    import oscP5.*;
+    
     OscP5 oscP5;
 
     PVector basePosition;
