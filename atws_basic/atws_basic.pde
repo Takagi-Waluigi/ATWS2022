@@ -49,7 +49,7 @@ void draw() {
 
   popStyle();
 
-  motionData.setDataMode(true);
+  motionData.setDataMode(false);
   motionData.update();
   motionData.setBasePosition(0, -1.0, 1.5);
   motionData.setBaseScale(75);
