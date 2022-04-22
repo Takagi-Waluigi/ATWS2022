@@ -7,7 +7,7 @@ class MotionDataManager{
     
     CsvManager csvManager;                 //保存済みデータを使用する際のクラス
     
-    import oscP5.*;
+    
     OscP5 oscP5;
 
     PVector basePosition;
@@ -282,7 +282,7 @@ class CsvManager {
   {
     this.default_data = loadTable(fileName);
     if ( this.default_data != null ) {
-        println("RECORDED DATA INFO");
+        println("[CSVM]RECORDED DATA INFO");
         println( ">RAW_COUNT: " + this.default_data.getRowCount());
         println( ">COLUNMN_COUNT: " + this.default_data.getColumnCount());
 
@@ -306,7 +306,6 @@ class CsvManager {
     pd.x = this.default_data.getFloat(this.n_frame%this.max_frame, id * 3 + 0);
     pd.y = this.default_data.getFloat(this.n_frame%this.max_frame, id * 3 + 1);
     pd.z = this.default_data.getFloat(this.n_frame%this.max_frame, id * 3 + 2);
-    //pd.mult(100);
 
     return pd;
   }
@@ -325,9 +324,16 @@ class CsvManager {
 
   void beginCsvRecord()
   {
-      println("RECORD BEGIN!!!");
+      println("[CSVM] RECORD BEGIN!!!");
       this.created_data = new Table();
+
+      for(int i = 0; i < this.n_column; i ++)
+      {
+        this.created_data.addColumn();
+      }
+
       this.enableSave = true;
+      this.n_frame_rec = 0;
   }
 
   void setData(PVector[] pd)
@@ -337,9 +343,9 @@ class CsvManager {
         this.created_data.addRow();
         for(int i = 0; i < pd.length; i ++)
         {
-            this.created_data.setFloat(this.n_frame_rec, i * 3, pd[i].x);
-            this.created_data.setFloat(this.n_frame_rec, i * 3 + 1, pd[i].y);
-            this.created_data.setFloat(this.n_frame_rec, i * 3 + 2, pd[i].z);
+          this.created_data.setFloat(this.n_frame_rec, i * 3, pd[i].x);
+          this.created_data.setFloat(this.n_frame_rec, i * 3 + 1, pd[i].y);
+          this.created_data.setFloat(this.n_frame_rec, i * 3 + 2, pd[i].z);
         }
 
         this.n_frame_rec ++;
@@ -353,6 +359,7 @@ class CsvManager {
 
   void saveData(String name)
   {
+      println("[CSVM] Data saved.");
       this.enableSave = false;
       saveTable(this.created_data, "data/created/" + name + ".csv");
   }
